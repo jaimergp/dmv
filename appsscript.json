@@ -1,0 +1,11 @@
+{
+  "timeZone": "Europe/Paris",
+  "dependencies": {
+  },
+  "webapp": {
+    "access": "ANYONE",
+    "executeAs": "USER_ACCESSING"
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": ["https://www.googleapis.com/auth/drive", "https://www.googleapis.com/auth/drive.install"]
+}
