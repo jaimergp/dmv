@@ -968,18 +968,17 @@ UI.MenubarHelper = {
     return container
   },
 
-  createOption: function (name, callbackHandler, icon) {
+  createOption: function (name, callbackHandler, icon, iconPrefix='fa') {
     var option = new UI.Panel()
     option.setClass('option')
 
     if (icon) {
-      option.add(new UI.Icon(icon).setWidth('20px'))
+      option.add(new UI.Icon(icon, prefix=iconPrefix).setWidth('20px'))
       option.add(new UI.Text(name))
     } else {
       option.setTextContent(name)
     }
-
-    option.onClick(callbackHandler)
+    if (callbackHandler) option.onClick(callbackHandler)
 
     return option
   },
@@ -995,20 +994,21 @@ UI.MenubarHelper = {
     return options
   },
 
-  createInput: function (name, callbackHandler) {
+  createInput: function (name, callbackHandler, icon, iconPrefix='fa') {
     var panel = new UI.Panel()
       .setClass('option')
-
+      
+    if (icon) panel.add(new UI.Icon(icon, prefix=iconPrefix).setWidth('20px'))
+      
     var text = new UI.Text()
-      .setWidth('70px')
+      .setWidth('50%')
       .setValue(name)
 
     var input = new UI.Input()
-      .setWidth('40px')
+      .setWidth('25%')
       .onKeyDown(callbackHandler)
 
-    panel.add(text)
-    panel.add(input)
+    panel.add(text, input)
 
     return panel
   },
@@ -1018,7 +1018,7 @@ UI.MenubarHelper = {
       .setClass('option')
 
     var text = new UI.Text()
-      .setWidth('70px')
+      //.setWidth('70px')
       .setValue(name)
 
     var checkbox = new UI.Checkbox()

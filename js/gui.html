@@ -4,6 +4,10 @@
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 
+NGL.documentationUrl = 'http://nglviewer.org/ngl/api/manual/index.html'
+var DMVDocumentationUrl = 'https://github.com/jaimergp/dmv'
+var DMVLogo = "<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAADgAAAA4AB/Pg+8wAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQSSURBVFiF7ZZ/TJR1HMffn+/zHMcdP7rj+JGzJZvgj0RcHHYF/8jQNmq2KdNhP+bWZnPlGuKEmbmummlpDkwyWq0yE7cj1PEHTYhhbdxUSBpRFqzxq0gQFlKHd/c8z6c/AnfHfRG01vqDz3/P+/P5vD+vzz33fZ4HmI/5+D9GeWNGyq7anEv/ll/ZznrvsW3vL5HlhEwcGL/n3IXAgtWHzmQV/9PhR5776MnWxNyHe+IWfz4ngIq6B/Nb/MkuAGjRkg9W1Tmtdzvc7XaLDkdWFUPgimN1xuHtJ56ZFaDdb6sOTMr9eox5IKh+ercAyvXlH/TGLo4FAIZApz2z0u12h80Mu3jjrPNAh5aQFKpd0FI2vHsuI/NOhx/ffnzhFUfO1lCtNzYtTh1aXikF4BZY2oKJu6Yb+QwTfRt0nLxTgN9MybW/R9kjfuG25NxtBe6u+AgATKilhUqXSWbWpiWucFYXuuY6fCTf9cDjPaeciqFF5MZMNsWvLtgXBsANlvvBtHud0o8VYlTmKQShEtPu30yhQz92n69P2Xr1TXkBoXjN/vGMWwCgYDmAmPgoRolxUdrDgNO57LtnZxs+nJ9dBFCeCmDl0FdI8fXLylQBKgcA4kZ1LUANU5m+axqqTStRY6TLKEaE2Vh6aeOZEZnrr+udVpNP+Z7BiwBgDAJ9ManY7/pQvhRxoQDRO6Gi1UzYFOhEFGkc0UFwGAHllRmWh+oTL08NBwALGDZfH1yD56X1xHREgLEsDCBagHUdOTzYIO0CP//Q6Q2rpqtDa7LSAJSEaiYwBBgFPR93A4hcCFgU8aeymAkx0fTj11r6JhAGJU2KAVEJBoWpqloBwBy2IQArG/4UGl7PjBOydSIAiDBuS4h+9OLTn90gg1+SNQHIdZ7euGXqYjgv+wkwPyYrtEMvW1rnvSoIZQDGZgUA+FXLuok+ALhcVPsJmL0yYyJ623XyqfiugjQzCzosrQE6k/S4SgD4cm/sNWK8JgMIvTc/wKYdDXFgJuwAoEv879VV/15bwF4KQHJkABDvoObmW08jXYs5CkLHdICQ4BLKRjBUaSuq/QaA9BwR885em2mPLMeMU0mNrc2hWrObNOgc9ooPAeAaWqt9ITMzCbEH4OsRQwim93LsFgnaHwrUUplX0764JhB5pgNMQFF3yxoAwLvZM0qA9Py3L4yGNzWcgYHXE5u8v8zkZyhUAuDPKQAG+ADl3eyZqQEAUoVSBaBdlqt6xA6/OnkqibpvRI1W3M6rucw6AKKDfwMwfoaiHbpdAwB4Nnt0YnoBkgfKUKyKmlWTb1jDeDG9vts/m58jYH0LwE8CMIopDzdnawCAy1tqWixBln7beTLj0ZtgOp/c1Fo/Fy+PmwJEFPH9MR/z8Z/HX4fKV/MIakYxAAAAAElFTkSuQmCC' width='32' height='32' />"
+ 
 HTMLElement.prototype.getBoundingClientRect = (function () {
   // workaround for ie11 behavior with disconnected dom nodes
 
@@ -204,13 +208,13 @@ NGL.StageWidget = function (stage) {
   function setTheme (value) {
     var cssPath, bgColor
     if (value === 'light') {
-      cssPath = NGL.cssDirectory + 'light.css'
+      // cssPath = NGL.cssDirectory + 'light.css'
       bgColor = 'white'
     } else {
-      cssPath = NGL.cssDirectory + 'dark.css'
+      // cssPath = NGL.cssDirectory + 'dark.css'
       bgColor = 'black'
     }
-    cssLinkElement.href = cssPath
+    // cssLinkElement.href = cssPath
     stage.setParameters({ backgroundColor: bgColor })
   }
 
@@ -415,17 +419,17 @@ NGL.ToolbarWidget = function (stage) {
 
 NGL.MenubarWidget = function (stage, preferences) {
   var container = new UI.Panel()
-
+  container.add(new UI.Html(DMVLogo).setClass('menu').setFloat('left').setMarginLeft('5px'))
   container.add(new NGL.MenubarFileWidget(stage))
   container.add(new NGL.MenubarViewWidget(stage, preferences))
   if (NGL.examplesListUrl && NGL.examplesScriptUrl) {
     container.add(new NGL.MenubarExamplesWidget(stage))
   }
   container.add(new NGL.MenubarHelpWidget(stage, preferences))
-
-  container.add(
-    new UI.Panel().setClass('menu').setFloat('right').add(
-      new UI.Text('NGL Viewer ' + NGL.Version).setClass('title')
+  container.add(new UI.Panel().setClass('menu').setFloat('right').add(
+    new UI.Text('InsiliChem DMV @ NGL ' + NGL.Version).setClass('title').onClick(function(){ 
+        window.open(DMVDocumentationUrl, '_blank')
+      })
     )
   )
 
@@ -567,16 +571,17 @@ NGL.MenubarFileWidget = function (stage) {
   var createDivider = UI.MenubarHelper.createDivider
 
   var menuConfig = [
-    createOption('Upload from PC', onOpenOptionClick),
-    createOption('Import from Google Drive', onOpenDriveOptionClick),
-    createInput('Download PDB', onPdbInputKeyDown),
+    createOption('Upload from PC', onOpenOptionClick, 'upload'),
+    createOption('Import from Google Drive', onOpenDriveOptionClick, 'google-drive', iconPrefix='fab'),
+    createOption('Import from Office.com', onOpenDriveOptionClick, 'microsoft', iconPrefix='fab'),
+    createInput('Fetch PDB', onPdbInputKeyDown, 'download'),
     createDivider(),
-    createCheckbox('asTrajectory', false, onAsTrajectoryChange),
-    createCheckbox('firstModelOnly', false, onFirstModelOnlyChange),
-    createCheckbox('cAlphaOnly', false, onCAlphaOnlyChange),
+    createCheckbox('Load as trajectory', false, onAsTrajectoryChange),
+    createCheckbox('Load 1st model only', false, onFirstModelOnlyChange),
+    createCheckbox('Load C-alpha only', false, onCAlphaOnlyChange),
     createDivider(),
     createOption('Screenshot', onScreenshotOptionClick, 'camera'),
-    createOption('Export image...', onExportImageOptionClick)
+    createOption('Export image...', onExportImageOptionClick, 'file-export')
   ]
 
   if (NGL.ListingDatasource) {
@@ -585,7 +590,7 @@ NGL.MenubarFileWidget = function (stage) {
     )
   }
 
-  var optionsPanel = UI.MenubarHelper.createOptionsPanel(menuConfig)
+  var optionsPanel = UI.MenubarHelper.createOptionsPanel(menuConfig).setWidth('220px')
   optionsPanel.dom.appendChild(fileInput)
 
   return UI.MenubarHelper.createMenuContainer('File', optionsPanel)
@@ -673,21 +678,21 @@ NGL.MenubarViewWidget = function (stage, preferences) {
   var menuConfig = [
     createOption('Toggle sidebar', onToggleSidebarClick),
     createDivider(),
-    createOption('Light theme', onLightThemeOptionClick),
-    createOption('Dark theme', onDarkThemeOptionClick),
+    createOption('Light theme', onLightThemeOptionClick, 'sun'),
+    createOption('Dark theme', onDarkThemeOptionClick, 'moon'),
     createDivider(),
     createOption('Perspective', onPerspectiveCameraOptionClick),
     createOption('Orthographic', onOrthographicCameraOptionClick),
-    createOption('Stereo', onStereoCameraOptionClick),
+    createOption('Stereo', onStereoCameraOptionClick, 'glasses'),
     createDivider(),
     createOption('Full screen', onFullScreenOptionClick, 'expand'),
     createOption('Center', onCenterOptionClick, 'bullseye'),
     createDivider(),
-    createOption('Toggle spin', onToggleSpinClick),
-    createOption('Toggle rock', onToggleRockClick),
+    createOption('Toggle spin', onToggleSpinClick, 'redo'),
+    createOption('Toggle rock', onToggleRockClick, 'sync'),
     createDivider(),
-    createOption('Get orientation', onGetOrientationClick),
-    createOption('Set orientation', onSetOrientationClick)
+    createOption('Get orientation', onGetOrientationClick, 'compass'),
+    createOption('Set orientation', onSetOrientationClick, 'drafting-compass')
   ]
 
   var optionsPanel = UI.MenubarHelper.createOptionsPanel(menuConfig)
@@ -734,7 +739,7 @@ NGL.MenubarHelpWidget = function (stage, preferences) {
   }
 
   function onDocOptionClick () {
-    window.open(NGL.documentationUrl, '_blank')
+    window.open(DMVDocumentationUrl, '_blank')
   }
 
   function onDebugOnClick () {
@@ -778,13 +783,13 @@ NGL.MenubarHelpWidget = function (stage, preferences) {
   var createDivider = UI.MenubarHelper.createDivider
 
   var menuConfig = [
-    createOption('Overview', onOverviewOptionClick),
-    createOption('Documentation', onDocOptionClick),
+    createOption('Quickstart', onOverviewOptionClick, 'info'),
+    createOption('Documentation', onDocOptionClick, 'book'),
     createDivider(),
-    createOption('Debug on', onDebugOnClick),
-    createOption('Debug off', onDebugOffClick),
+    createOption('Debug', onDebugOnClick, 'bug'),
+    // createOption('Debug off', onDebugOffClick),
     createDivider(),
-    createOption('Preferences', onPreferencesOptionClick, 'sliders')
+    createOption('More options', onPreferencesOptionClick, 'cog')
   ]
 
   var optionsPanel = UI.MenubarHelper.createOptionsPanel(menuConfig)
@@ -828,7 +833,7 @@ NGL.OverviewWidget = function (stage, preferences) {
 
   var headingPanel = new UI.Panel()
     .setBorderBottom('1px solid #555')
-    .setHeight('25px')
+    .setHeight('36px')
     .setCursor('move')
     .onMouseDown(function (e) {
       if (e.which === 1) {
@@ -847,8 +852,9 @@ NGL.OverviewWidget = function (stage, preferences) {
     .setOverflow('auto')
 
   headingPanel.add(
-    new UI.Text('NGL Viewer').setFontStyle('italic'),
-    new UI.Html('&nbsp;&mdash;&nbsp;Overview')
+    new UI.Html(DMVLogo),
+    new UI.Text('InsiliChem DMV').setFontStyle('italic').setMarginLeft('10px'),
+    new UI.Html('&nbsp;&mdash;&nbsp;Quickstart')
   )
   headingPanel.add(
     new UI.Icon('times')
@@ -881,17 +887,29 @@ NGL.OverviewWidget = function (stage, preferences) {
       .add(icon, label)
     listingPanel.add(panel)
   }
-
+  
   listingPanel
-    .add(new UI.Panel().add(new UI.Html("To load a new structure use the <i>File</i> menu in the top left via drag'n'drop.")))
+  
+  listingPanel
+    .add(new UI.Panel().add(new UI.Html("<h1>Opening files</h1>")))
+    .add(new UI.Panel().add(new UI.Html("Easiest way from your local disk: drag the file to the canvas!")))
     .add(new UI.Break())
-
-  listingPanel
+    .add(new UI.Panel().add(new UI.Html("Additionally, you can use the <i>File</i> menu. You can choose a file from your computer, fetch a PDB entry or import from Google Drive/Office.com [WIP].")))
+    .add(new UI.Break())
+    
+    listingPanel
+    .add(new UI.Panel().add(new UI.Html("Google Drive integration requires special permissions. First time you use this option, a popup will prompt for access. This will also register the app in your Drive services so you can use it to open files and attachments directly. Please <a href='" + DMVDocumentationUrl + "' target='_blank'>read here</a> for more information.")))
+    .add(new UI.Break())
+    
+    listingPanel
+    .add(new UI.Panel().add(new UI.Html("<h1>Usage</h1>")))
+    .add(new UI.Panel().add(new UI.Html('<i>This app is only a slight modification of the NGL demo app. Credits to <a href="https://github.com/arose/" target="_blank">@arose</a> and everyone else involved. Following help message is his.</i>')))
+    .add(new UI.Break())
     .add(new UI.Panel().add(new UI.Text('A number of clickable icons provide common actions. Most icons can be clicked on, just try it or hover the mouse pointer over it to see a tooltip.')))
     .add(new UI.Break())
 
   addIcon('eye', 'Controls the visibility of a component.')
-  addIcon('trash-o', 'Deletes a component. Note that a second click is required to confirm the action.')
+  addIcon('trash', 'Deletes a component. Note that a second click is required to confirm the action.')
   addIcon('bullseye', 'Centers a component.')
   addIcon('bars', 'Opens a menu with further options.')
   addIcon('square', 'Opens a menu with coloring options.')
@@ -912,7 +930,7 @@ NGL.OverviewWidget = function (stage, preferences) {
   listingPanel
     .add(new UI.Panel().add(new UI.Html(
       'For more information please visit the ' +
-      "<a href='" + NGL.documentationUrl + "' target='_blank'>documentation pages</a>."
+      "<a href='" + NGL.documentationUrl + "' target='_blank'>NGL documentation pages</a>."
     )))
 
   var overview = preferences.getKey('overview')

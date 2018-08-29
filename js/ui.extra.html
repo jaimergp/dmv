@@ -215,11 +215,11 @@ UI.OverlayPanel.prototype.attach = function (node) {
 
 // Icon (requires font awesome)
 
-UI.Icon = function (value) {
+UI.Icon = function (value, prefix='fa') {
   UI.Panel.call(this)
 
   var dom = document.createElement('span')
-  dom.className = 'Icon fa'
+  dom.className = 'Icon ' + prefix
 
   this.dom = dom
 
@@ -300,7 +300,7 @@ UI.ToggleIcon.prototype.getValue = function () {
 // Dispose Icon
 
 UI.DisposeIcon = function () {
-  UI.Icon.call(this, 'trash-o')
+  UI.Icon.call(this, 'trash')
 
   var flag = false
   var scope = this
